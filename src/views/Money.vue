@@ -1,14 +1,16 @@
 <template>
     <div>
-        Money组件
+      <Layout>
+          <div >Money.vue</div>
+      </Layout>
     </div>
 </template>
 
 <script lang='ts'>
 
-    export default  {
-        name:'Money'
-    }
+    export default {
+        name: 'Money'
+    };
 </script>
 
 <style scoped lang="scss">

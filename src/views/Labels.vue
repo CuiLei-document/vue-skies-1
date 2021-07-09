@@ -1,6 +1,8 @@
 <template>
     <div>
-        Labels.vue
+       <Layout>
+           <div>Labels.vue</div>
+       </Layout>
     </div>
 </template>
 
