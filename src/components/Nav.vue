@@ -32,6 +32,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import "~@/assets/styles/hepler.scss";
     .icon {
         width: 1em;
         height: 1em;
@@ -40,8 +41,8 @@
         overflow: hidden;
     }
     nav{
+        @extend %outShadow;
         display:flex;
-        box-shadow: 0 0 3px rgba(0,0,0,0.25);
         font-size: 14px;
         > .item{
             padding: 2px 0;

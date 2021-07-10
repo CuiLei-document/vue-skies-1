@@ -1,6 +1,6 @@
 <template>
-    <div class="nav-wrapper">
-        <div class="content">
+    <div class="layout-wrapper">
+        <div class="content" :class="{[`${classPrefix}-content`]:classPrefix}">
             <slot/>
         </div>
         <Nav/>
@@ -9,16 +9,15 @@
 
 <script lang='ts'>
     import Vue from 'vue';
-    import {Component} from 'vue-property-decorator';
-
-    @Component
-    export default class Layout extends Vue {
-
+    export default {
+        props:{
+            classPrefix:String
+        }
     }
 </script>
 
 <style scoped lang="scss">
-.nav-wrapper{
+.layout-wrapper{
     display:flex;
     flex-direction: column;
     height:100vh;
