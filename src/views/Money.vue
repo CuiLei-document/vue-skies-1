@@ -1,27 +1,49 @@
 <template>
     <Layout class-prefix="layout">
-
-        <NumberPad/>
-        <Types/>
-        <FromInput/>
-        <Tags/>
+        {{record}}
+        <NumberPad @update:value="onUpNumberPad"/>
+        <Types :type.sync="record.type"/>
+        <FromInput @update:value="onUpFromInput"/>
+        <Tags :data-source.sync="tags" @update:value="onUpTag"/>
     </Layout>
 </template>
 
 <script lang='ts'>
 
+    import Vue from 'vue'
     import NumberPad from '@/components/Moneys/NumberPad.vue';
     import Types from '@/components/Moneys/Types.vue';
     import FromInput from '@/components/Moneys/FromInput.vue';
     import Tags from '@/components/Moneys/Tags.vue';
-    export default {
-        name: 'Money',
-        components: {Tags, FromInput, Types, NumberPad}
-    };
+    import {Component} from "vue-property-decorator";
+
+    type Record = {
+        tags: string[];
+        notes:string;
+        type:string;
+        amount:number
+    }
+
+    @Component({components:{Tags, FromInput, Types, NumberPad}})
+    export default class Money extends Vue {
+        tags = ['衣', '食', '住', '行']
+        record: Record = {
+            tags:[],notes:'',type:'-',amount: 0
+        }
+        onUpFromInput(value:string){
+            this.record.notes = value
+        }
+        onUpTag(value:string[]){
+            this.record.tags = value
+        }
+        onUpNumberPad(value:string){
+            this.record.amount = parseFloat(value)
+        }
+    }
 </script>
 <style lang="scss">
-    .layout-content{
-        display:flex;
+    .layout-content {
+        display: flex;
         flex-direction: column-reverse;
     }
 </style>
@@ -36,6 +58,7 @@
             font-family: Consolas, monosplas, serif;
             text-align: right;
         }
+
         > .buttons {
             $h: 64px;
             flex-wrap: wrap;
@@ -47,6 +70,7 @@
                 float: left;
                 background-color: transparent;
                 border: none;
+
                 &.ok {
                     height: $h * 2;
                     float: right;
@@ -81,6 +105,7 @@
                 &:nth-child(12) {
                     background: darken($bg, 4%*6);
                 }
+
                 &:nth-child(14) {
                     background: darken($bg, 4%*5);
                 }
@@ -136,12 +161,14 @@
 
     .tags {
         padding: 16px;
-        display:flex;
+        display: flex;
         flex-direction: column-reverse;
+
         > .current {
             display: flex;
             font-size: 14px;
-            flex-wrap:wrap;
+            flex-wrap: wrap;
+
             > li {
                 margin-top: 8px;
                 background: #d9d9d9;

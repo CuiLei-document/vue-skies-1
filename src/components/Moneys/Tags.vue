@@ -1,32 +1,44 @@
 <template>
     <div class="tags">
         <div class="new">
-            <button>新建标签</button>
+            <button @click="create">新建标签</button>
         </div>
         <ul class="current">
-            <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li>
-            <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li>
-            <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li>
+            <li v-for="(tag,index) in dataSource" :key="index" @click="toggle(tag)" :class="{selected:selectedTag.indexOf(tag)>=0}">{{tag}}</li>
         </ul>
     </div>
 </template>
 
 <script lang='ts'>
     import Vue from 'vue';
-    import {Component} from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
 
     @Component
     export default class Tags extends Vue {
-
+        @Prop() dataSource:string[] | undefined
+        selectedTag:string[] = []
+        toggle(tag:string){
+            const index = this.selectedTag.indexOf(tag);
+            if(index>=0){
+                this.selectedTag.splice(index,1)
+            }else{
+                this.selectedTag.push(tag)
+            }
+        }
+        create(){
+            const name = window.prompt('请输入标签名')
+            if(name === ''){
+                alert('标签名不能为空')
+            }else{
+                if(this.dataSource){
+                    this.$emit('update:dataSource',[...this.dataSource,name])
+                }
+            }
+        }
+        @Watch('selectedTag')
+        onSelectedTagChange(tag:string){
+            this.$emit('update:value',tag)
+        }
     }
 </script>
 
@@ -40,14 +52,19 @@
             font-size: 14px;
             flex-wrap:wrap;
             > li {
+                $bg:#d9d9d9;
                 margin-top: 8px;
-                background: #d9d9d9;
+                background:$bg;
                 $h: 24px;
                 height: $h;
                 border-radius: $h /2;
                 padding: 0 16px;
                 margin-right: 16px;
                 line-height: $h;
+                &.selected{
+                    background:darken($bg,50%);
+                    color: white;
+                }
             }
         }
 
