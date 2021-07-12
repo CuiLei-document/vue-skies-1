@@ -15,14 +15,12 @@
     import FromInput from '@/components/Moneys/FromInput.vue';
     import Tags from '@/components/Moneys/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import model from '@/model';
-
-
+    import model from '@/model'
     @Component({components:{Tags, FromInput, Types, NumberPad}})
     export default class Money extends Vue {
         tags = ['衣', '食', '住', '行']
-
-        recordList = model.fetch()
+        // eslint-disable-next-line no-undef
+        recordList:RecordItem[] = model.fetch()
         // eslint-disable-next-line no-undef
         record: RecordItem = {
             tags:[],notes:'',type:'-',amount: 0
@@ -38,7 +36,7 @@
         }
         submitRecord(){
             // eslint-disable-next-line no-undef
-            const records:RecordItem = JSON.parse(JSON.stringify(this.record))
+            const records:RecordItem = model.clone(this.record)
             console.log(this.recordList)
             records.createAt = new Date()
             this.recordList.push(records)
