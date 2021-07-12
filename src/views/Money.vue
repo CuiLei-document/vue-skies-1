@@ -1,6 +1,5 @@
 <template>
     <Layout class-prefix="layout">
-        {{record}}
         <NumberPad @update:value="onUpNumberPad" @submit="submitRecord"/>
         <Types :type.sync="record.type"/>
         <div class="from-wrapper">
@@ -18,14 +17,12 @@
     import FromInput from '@/components/Moneys/FromInput.vue';
     import Tags from '@/components/Moneys/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import recordListModel from '@/models/recordListModel'
-    import tagListModel from '@/models/tagListModel';
-    tagListModel.fetch()
+    import store from '@/store/index2';
     @Component({components:{Tags, FromInput, Types, NumberPad}})
     export default class Money extends Vue {
-        tags = tagListModel.data
+        tags = store.tagList
         // eslint-disable-next-line no-undef
-        recordList:RecordItem[] = recordListModel.fetch()
+        recordList:RecordItem[] = store.recordList()
         // eslint-disable-next-line no-undef
         record: RecordItem = {
             tags:[],notes:'',type:'-',amount: 0
@@ -40,15 +37,7 @@
             this.record.amount = parseFloat(value)
         }
         submitRecord(){
-            // eslint-disable-next-line no-undef
-            const records:RecordItem = recordListModel.clone(this.record)
-            console.log(this.recordList)
-            records.createAt = new Date()
-            this.recordList.push(records)
-        }
-        @Watch('recordList')
-        onRecordListChanged(){
-            recordListModel.save(this.recordList)
+            store.create(this.record)
         }
     }
 </script>

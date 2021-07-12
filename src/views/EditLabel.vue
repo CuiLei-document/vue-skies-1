@@ -1,17 +1,17 @@
 <template>
     <Layout>
         <div class="navBar">
-            <svg class="icon">
-                <use xlink:href="#icon-left"></use>
-            </svg>
+                <svg class="icon" @click="goBack">
+                    <use xlink:href="#icon-left"></use>
+                </svg>
             <span class="title">编辑标签</span>
             <span></span>
         </div>
         <div class="wrapper">
-            <FromInput :value="tag.id" name="标签名" placeholder="请输入标签名"/>
+            <FromInput @update:value="updateTag" :value="tag.name" name="标签名" placeholder="请输入标签名"/>
         </div>
         <div class="button-wrapper">
-            <Button>删除按钮</Button>
+            <Button @click="removeTag">删除按钮</Button>
         </div>
     </Layout>
 </template>
@@ -22,6 +22,7 @@
     import tagListModel from '@/models/tagListModel';
     import Button from '@/components/Button.vue';
     import FromInput from '@/components/Moneys/FromInput.vue';
+    import store from '@/store/index2';
     @Component({
         components: {FromInput, Button}
     })
@@ -31,14 +32,21 @@
         created(){
             console.log(this.$route.params);
             const id = this.$route.params.id;
-            tagListModel.fetch()
-            const tag = tagListModel.data.filter(tag =>tag.id === id)[0]
+            const tag = store.findTag(id)
             if(tag){
                     this.tag = tag
             }else{
                 this.$router.replace('/404')
             }
-
+        }
+        updateTag(name:string){
+            tagListModel.update(this.tag.id,name)
+        }
+        removeTag(){
+            tagListModel.remove(this.tag.id)
+        }
+        goBack(){
+            this.$router.back()
         }
     }
 </script>
