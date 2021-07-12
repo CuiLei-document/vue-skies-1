@@ -1,14 +1,4 @@
 
-type TagListModel ={
-    data:Tag[];
-    fetch:()=>Tag[];
-    createTag:(name:string) => 'success' | 'duplicate'
-    save:()=>void
-}
-type Tag = {
-    id:string;
-    name:string;
-}
 const tagListModel:TagListModel = {
     data: [],
     fetch(){

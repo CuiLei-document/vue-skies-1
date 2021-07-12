@@ -5,3 +5,13 @@ type RecordItem = {
     amount:number;
     createAt?:Date;
 }
+type TagListModel ={
+    data:Tag[];
+    fetch:()=>Tag[];
+    createTag:(name:string) => 'success' | 'duplicate'
+    save:()=>void
+}
+type Tag = {
+    id:string;
+    name:string;
+}

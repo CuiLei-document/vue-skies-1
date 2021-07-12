@@ -1,5 +1,6 @@
 <template>
     <Layout class-prefix="layout">
+        {{record}}
         <NumberPad @update:value="onUpNumberPad" @submit="submitRecord"/>
         <Types :type.sync="record.type"/>
         <div class="from-wrapper">

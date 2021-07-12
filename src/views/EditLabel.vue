@@ -8,7 +8,7 @@
             <span></span>
         </div>
         <div class="wrapper">
-            <FromInput name="标签名" placeholder="请输入标签名"/>
+            <FromInput :value="tag.id" name="标签名" placeholder="请输入标签名"/>
         </div>
         <div class="button-wrapper">
             <Button>删除按钮</Button>
@@ -26,13 +26,15 @@
         components: {FromInput, Button}
     })
     export default class EditLabel extends Vue {
+        // eslint-disable-next-line no-undef
+        tag!:Tag
         created(){
             console.log(this.$route.params);
             const id = this.$route.params.id;
             tagListModel.fetch()
             const tag = tagListModel.data.filter(tag =>tag.id === id)[0]
             if(tag){
-                console.log(tag)
+                    this.tag = tag
             }else{
                 this.$router.replace('/404')
             }
