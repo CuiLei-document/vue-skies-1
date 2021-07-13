@@ -8,7 +8,7 @@ const recordListModel = {
     },
     create(record:RecordItem){
         const records:RecordItem = clone(record)
-        records.createAt = new Date()
+        records.createAt = new Date().toISOString()
         this.data.push(records)
         this.save()
     },

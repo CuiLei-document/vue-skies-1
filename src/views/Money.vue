@@ -13,7 +13,6 @@
 
     import Vue from 'vue'
     import NumberPad from '@/components/Moneys/NumberPad.vue';
-    import Types from '@/components/Moneys/Types.vue';
     import FromInput from '@/components/Moneys/FromInput.vue';
     import Tags from '@/components/Moneys/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
@@ -21,7 +20,7 @@
     import recordTypeList from '@/constants/recordTypeList';
 
 
-    @Component({components:{Tabs, Tags, FromInput, Types, NumberPad}})
+    @Component({components:{Tabs, Tags, FromInput, NumberPad}})
     export default class Money extends Vue {
         // eslint-disable-next-line no-undef
         get recordList(){
