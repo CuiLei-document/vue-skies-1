@@ -8,7 +8,7 @@
             <span></span>
         </div>
         <div class="wrapper">
-            <FromInput @update:value="updateTag" :value="tag.name" name="标签名" placeholder="请输入标签名"/>
+            <FromInput @update:value="updateTag" :value="currentTag.name" name="标签名" placeholder="请输入标签名"/>
         </div>
         <div class="button-wrapper">
             <Button @click="removeTag">删除按钮</Button>
@@ -19,31 +19,30 @@
 <script lang='ts'>
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import tagListModel from '@/models/tagListModel';
     import Button from '@/components/Button.vue';
     import FromInput from '@/components/Moneys/FromInput.vue';
-    import store from '@/store/index2';
     @Component({
         components: {FromInput, Button}
     })
     export default class EditLabel extends Vue {
-        // eslint-disable-next-line no-undef
-        tag!:Tag
+        get currentTag(){
+            return this.$store.state.currentTag;
+        }
         created(){
-            console.log(this.$route.params);
             const id = this.$route.params.id;
-            const tag = store.findTag(id)
-            if(tag){
-                    this.tag = tag
-            }else{
+            this.$store.commit('fetchTag')
+            this.$store.commit('setCurrentTag',id)
+            if(!this.currentTag){
                 this.$router.replace('/404')
             }
         }
         updateTag(name:string){
-            tagListModel.update(this.tag.id,name)
+            if(this.currentTag){
+                this.$store.commit('updateTag',{id:this.currentTag.id,name:name})
+            }
         }
         removeTag(){
-            tagListModel.remove(this.tag.id)
+            this.$store.commit('removeTag',this.currentTag.id)
         }
         goBack(){
             this.$router.back()

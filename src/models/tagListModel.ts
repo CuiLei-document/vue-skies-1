@@ -2,6 +2,7 @@ import router from '@/router';
 import createId from '@/lib/createId.ts'
 const tagListModel: TagListModel = {
     data: [],
+
     fetch() {
         this.data = JSON.parse(window.localStorage.getItem('tagList') || '[]');
         return this.data;

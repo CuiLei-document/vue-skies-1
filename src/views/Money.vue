@@ -1,11 +1,11 @@
 <template>
     <Layout class-prefix="layout">
         <NumberPad @update:value="onUpNumberPad" @submit="submitRecord"/>
-        <Types :type.sync="record.type"/>
+        <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
         <div class="from-wrapper">
             <FromInput name="备注" placeholder="请输入备注" @update:value="onUpFromInput"/>
         </div>
-        <Tags :data-source.sync="tags" @update:value="onUpTag"/>
+        <Tags/>
     </Layout>
 </template>
 
@@ -17,12 +17,20 @@
     import FromInput from '@/components/Moneys/FromInput.vue';
     import Tags from '@/components/Moneys/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import store from '@/store/index2';
-    @Component({components:{Tags, FromInput, Types, NumberPad}})
+    import Tabs from '@/components/Tabs.vue';
+    import recordTypeList from '@/constants/recordTypeList';
+
+
+    @Component({components:{Tabs, Tags, FromInput, Types, NumberPad}})
     export default class Money extends Vue {
-        tags = store.tagList
         // eslint-disable-next-line no-undef
-        recordList:RecordItem[] = store.recordList()
+        get recordList(){
+           return this.$store.state.recordList;
+        }
+        recordTypeList = recordTypeList
+        created(){
+            this.$store.commit('fetchRecords')
+        }
         // eslint-disable-next-line no-undef
         record: RecordItem = {
             tags:[],notes:'',type:'-',amount: 0
@@ -37,7 +45,7 @@
             this.record.amount = parseFloat(value)
         }
         submitRecord(){
-            store.create(this.record)
+            this.$store.commit('createRecord',this.record)
         }
     }
 </script>

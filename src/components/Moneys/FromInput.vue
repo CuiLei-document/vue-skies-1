@@ -16,7 +16,6 @@
         @Prop({default:''})readonly  value!:string;
         @Prop({required: true}) name!:string
         @Prop() placeholder!:string
-        @Watch('value')
             onValueChange(value:string){
             this.$emit('update:value', value);
         }
