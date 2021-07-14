@@ -49,6 +49,7 @@
 </script>
 
 <style scoped lang="scss">
+
     .tags {
         padding: 16px;
         display: flex;
@@ -65,7 +66,7 @@
                 background: $bg;
                 $h: 24px;
                 height: $h;
-                border-radius: $h /2;
+                border-radius: 12px;
                 padding: 0 16px;
                 margin-right: 16px;
                 line-height: $h;
