@@ -1,7 +1,7 @@
 <template>
     <div>
+        <div class="name">{{name}}</div>
         <label class="from-input">
-            <span class="name">{{name}}</span>
             <input type="text" :value="value" @input="onValueChange($event.target.value)" :placeholder="placeholder">
         </label>
     </div>
@@ -24,23 +24,29 @@
 </script>
 
 <style scoped lang="scss">
+    .name {
+        padding-left: 16px;
+        padding-top:8px;
+        /*border:1px solid red;*/
+    }
     .from-input {
         font-size: 14px;
         /*background: #f5f4f6;*/
-        display: flex;
-        align-items: center;
-        padding-left: 16px;
-
-        > .name {
-            padding-right: 16px;
-        }
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*padding-left: 16px;*/
 
         > input {
+            width:50vh;
             height: 64px;
             flex-grow: 1;
-            background: transparent;
+            background-color: #e2e1e1;
             border: none;
+            margin-top:16px;
+            margin-left:16px;
             padding-left: 16px;
+            border-radius: 6px;
+
         }
     }
 </style>

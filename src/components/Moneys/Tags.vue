@@ -1,11 +1,11 @@
 <template>
     <div class="tags">
         <div class="new">
-            <button @click="create">新建标签</button>
+            <button @click="createTag">新建标签</button>
         </div>
         <ul class="current">
             <li v-for="tag in tagList" :key="tag.id" @click="toggle(tag)"
-                :class="{selected:selectedTag.indexOf(tag)>=0}">{{tag.name}}
+                :class="{selected:selectedTag.indexOf(tag)>=0 }">{{tag.name}}
             </li>
         </ul>
     </div>
@@ -15,9 +15,11 @@
     import Vue from 'vue';
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import tagStore from '@/store/tagListStore';
+    import { mixins } from 'vue-class-component';
+    import TagHelper from '@/mixins/TagHelper';
 
     @Component
-    export default class Tags extends Vue {
+    export default class Tags extends mixins(TagHelper) {
         get tagList() {
             return this.$store.state.tagList;
         }
@@ -37,13 +39,7 @@
             }
         }
 
-        create() {
-            const name = window.prompt('请输入标签名');
-            if (!name || name === '') {
-                return alert('标签名不能为空');
-            }
-            this.$store.commit('createTag',name)
-        }
+
 
         @Watch('selectedTag')
         onSelectedTagChange(tag: string) {
