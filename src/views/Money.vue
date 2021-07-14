@@ -8,7 +8,7 @@
             <FromInput2 name="备注" :value.sync="record.notes" placeholder="请输入备注"/>
         </div>
         <div class="submit">
-            <Button @click="submitRecord">完成</Button>
+            <Button @click="submitRecord" active-class="btn">完成</Button>
         </div>
     </Layout>
 </template>
@@ -74,12 +74,15 @@
     .submit{
         text-align:center;
         margin-top:20px;
-        > button{
+        > Button{
             padding: 8px 16px;
             border:none;
-            background: #c2bfbf;
+            background: #717070;
             border-radius: 4px;
-            color:red;
+            color: white;
+            &:hover{
+                transform:scale(1.2)
+            }
         }
     }
 </style>
