@@ -4,6 +4,9 @@
 
         <Tags @update:value="onUpTag"/>
         <Types :type.sync="record.type"/>
+        <div class="createAt">
+            <FromInput2  type="date" :value.sync="record.createAt" />
+        </div>
         <div class="from-wrapper">
             <FromInput2 name="备注" :value.sync="record.notes" placeholder="请输入备注"/>
         </div>
@@ -24,6 +27,7 @@
     import recordTypeList from '@/constants/recordTypeList';
     import Types from '@/components/Moneys/Types.vue';
     import Button from '@/components/Button.vue';
+    import dayjs from 'dayjs';
 
     @Component({components:{Types, Tabs, Tags, FromInput2, NumberPad2,Button}})
     export default class Money extends Vue {
@@ -37,7 +41,7 @@
         }
         // eslint-disable-next-line no-undef
         record: RecordItem = {
-            tags:[],notes:'',type:'-',amount: 0
+            tags:[],notes:'',type:'-',amount: 0, createAt:new Date().toISOString()
         }
         onUpFromInput(value:string){
             this.record.notes = value
@@ -52,6 +56,9 @@
         submitRecord(){
             if(this.record.amount === 0 || this.record.tags.length === 0){
                 return window.alert('请输入金额,和选择一个标签')
+            }
+            if(this.record.createAt === ''){
+                return window.alert('请选择日期')
             }
             this.$store.commit('createRecord',this.record)
             if(this.$store.state.createRecordError === null){

@@ -49,7 +49,6 @@
             this.output = '0'
         }
         onValueChange(value:string){
-            console.log(value)
             this.$emit('update:value',value)
         }
     }
